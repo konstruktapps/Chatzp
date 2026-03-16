@@ -467,6 +467,9 @@ function App() {
         </div>
         <div className="footer-bottom">
           <p>&copy; 2026 ChatZP. Todos os direitos reservados.</p>
+          <p style={{ marginTop: '10px', fontSize: '0.85rem', opacity: 0.8 }}>
+            Uma solução criada por <a href="https://www.konstruktapp.com.br/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'none' }}>KonstruktApp</a>
+          </p>
         </div>
       </footer>
 
