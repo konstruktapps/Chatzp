@@ -26,26 +26,9 @@ const {
     <meta property="og:image" content="https://chatzp.com.br/logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Google Fonts: não-bloqueante com preload -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap"
-      />
-    </noscript>
+    <!-- Outfit: auto-hospedada, sem dependência de rede externa -->
+    <link rel="preload" as="font" href="/fonts/outfit-latin.woff2" type="font/woff2" crossorigin />
+    <link rel="preload" as="font" href="/fonts/outfit-latin-ext.woff2" type="font/woff2" crossorigin />
 
     <!-- Google Analytics: carregado após primeira interação do usuário -->
     <script>
@@ -85,6 +68,23 @@ const {
 </html>
 
 <style is:global>
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/outfit-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/outfit-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   --primary: #4b0082;
   --primary-light: #6a0dad;
@@ -354,6 +354,7 @@ button { cursor: pointer; border: none; font-family: var(--font); font-weight: 6
 .footer-nav-title { margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 700; color: var(--text-dark); }
 .footer-links ul { display: flex; flex-direction: column; gap: 0.8rem; color: var(--gray-medium); }
 .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.05); color: var(--gray-medium); font-size: 0.9rem; }
+.footer-credit { margin-top: 10px; font-size: 0.85rem; color: #777777; }
 
 /* ── WhatsApp Float ── */
 .whatsapp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45); text-decoration: none; animation: fadeInDrop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 1.5s both; transition: transform 0.2s ease; }
