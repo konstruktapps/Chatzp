@@ -1,0 +1,23 @@
+---
+const steps = [
+  { num: "01", title: "Conecte seus Canais", desc: "Escaneie o QR Code do WhatsApp e integre Facebook e Instagram em poucos cliques." },
+  { num: "02", title: "Desenhe o Fluxo", desc: "Use o FlowBuilder visual para criar regras de triagem e chatbots sem precisar programar." },
+  { num: "03", title: "Escale suas Vendas", desc: "Sua equipe recebe leads qualificados no CRM integrado, prontos para o fechamento." },
+];
+---
+<section id="como-funciona" class="how-it-works light-bg">
+  <div class="section-header fade-in">
+    <span class="badge">Onboarding Simplificado</span>
+    <h2 class="section-title">Como a ChatZP transforma sua operação</h2>
+    <p class="section-subtitle">Implementação rápida e intuitiva. Do zero à primeira automação em minutos.</p>
+  </div>
+  <div class="steps-container">
+    {steps.map((step, i) => (
+      <div class={`step-card fade-in stagger-${i + 1}`}>
+        <div class="step-number">{step.num}</div>
+        <h3>{step.title}</h3>
+        <p>{step.desc}</p>
+      </div>
+    ))}
+  </div>
+</section>

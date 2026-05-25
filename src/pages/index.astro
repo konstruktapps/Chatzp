@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Channels from '../components/Channels.astro';
+import Automation from '../components/Automation.astro';
+import CRM from '../components/CRM.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Features from '../components/Features.astro';
+import FAQ from '../components/FAQ';
+import CTA from '../components/CTA.astro';
+import Footer from '../components/Footer.astro';
+---
+<Layout>
+  <Navbar />
+  <main>
+    <Hero />
+    <Channels />
+    <Automation />
+    <CRM />
+    <HowItWorks />
+    <Features />
+
+    <!-- FAQ: única React island — só hidrata quando entra na tela -->
+    <section id="faq" class="faq-section light-bg">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Perguntas Frequentes</h2>
+        <p class="section-subtitle">Tire suas dúvidas e veja como a ChatZP se adapta ao seu negócio.</p>
+      </div>
+      <FAQ client:visible />
+    </section>
+
+    <CTA />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+.faq-section {
+  padding: 8rem 10%;
+}
+@media (max-width: 1024px) {
+  .faq-section { padding: 6rem 5%; }
+}
+</style>

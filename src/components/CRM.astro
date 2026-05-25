@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import crmImg from '../assets/crm.png';
+---
+<section id="crm" class="crm">
+  <div class="container-split reverse">
+    <div class="crm-text">
+      <div class="fade-in-left">
+        <span class="badge">CRM Integrado</span>
+        <h2 class="section-title">
+          CRM de Vendas Integrado <br />
+          <span class="gradient-text">à sua Comunicação</span>
+        </h2>
+        <p>Transforme cada conversa em receita. Controle cada oportunidade no funil de vendas, atribua contatos e tenha visibilidade total do desempenho da sua equipe comercial.</p>
+        <div class="crm-features">
+          <div class="crm-f-item">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <div>
+              <h4>Randomização de Atendentes</h4>
+              <p>Distribua leads de forma justa (Round Robin) e automática.</p>
+            </div>
+          </div>
+          <div class="crm-f-item">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <div>
+              <h4>Carteira de Clientes</h4>
+              <p>Vincule clientes a atendentes específicos para um serviço personalizado.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="crm-visual fade-in-right">
+      <Image
+        src={crmImg}
+        alt="ChatZP CRM Pipeline"
+        width={600}
+        format="webp"
+        quality={85}
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import flowbuilderImg from '../assets/flowbuilder.png';
+---
+<section id="automacao" class="automation light-bg">
+  <div class="container-split">
+    <div class="automation-visual fade-in-left">
+      <Image
+        src={flowbuilderImg}
+        alt="ChatZP FlowBuilder"
+        width={600}
+        format="webp"
+        quality={85}
+        loading="lazy"
+      />
+    </div>
+    <div class="automation-text">
+      <div class="fade-in-right">
+        <span class="badge">FlowBuilder Nativo</span>
+        <h2 class="section-title">
+          FlowBuilder: Automação Inteligente <br />
+          <span class="gradient-text">de Atendimento</span>
+        </h2>
+        <p>Nossa interface visual intuitiva permite desenhar fluxos de trabalho avançados em minutos. Qualifique leads 24/7 sem digitar uma única linha de código.</p>
+        <ul class="feature-list">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Arraste e solte blocos logicamente
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Condições inteligentes por horário ou palavra-chave
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Transbordo humano automático para a equipe certa
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
