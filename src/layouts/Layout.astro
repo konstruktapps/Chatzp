@@ -12,13 +12,41 @@ const {
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="icon" type="image/png" href="/logo.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://chatzp.com.br/" />
+    <meta property="og:image" content="https://chatzp.com.br/logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts: não-bloqueante com preload -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap"
+      />
+    </noscript>
+
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D73W6GB5ZK"></script>
     <script>
@@ -31,7 +59,7 @@ const {
   <body>
     <slot />
 
-    <!-- IntersectionObserver para animações de scroll — ~150 bytes, substitui Framer Motion -->
+    <!-- IntersectionObserver para animações de scroll — substitui Framer Motion -->
     <script>
       const io = new IntersectionObserver(
         (entries) => entries.forEach(e => {
@@ -46,8 +74,6 @@ const {
 </html>
 
 <style is:global>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap');
-
 :root {
   --primary: #4b0082;
   --primary-light: #6a0dad;
@@ -63,6 +89,7 @@ const {
   --shadow-hover: 0 30px 60px rgba(75, 0, 130, 0.12);
   --transition-smooth: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   --glass: rgba(255, 255, 255, 0.75);
+  --font: 'Outfit', system-ui, -apple-system, sans-serif;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,14 +107,14 @@ html { scroll-behavior: smooth; }
 }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font);
   background-color: var(--bg-light);
   color: var(--text-dark);
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* ── Scroll Animations (substitui Framer Motion whileInView) ── */
+/* ── Scroll Animations ── */
 .fade-in {
   opacity: 0;
   transform: translateY(30px);
@@ -113,7 +140,7 @@ body {
   transform: none;
 }
 
-/* Stagger delays para grids */
+/* Stagger delays */
 .stagger-1 { transition-delay: 0.10s; }
 .stagger-2 { transition-delay: 0.20s; }
 .stagger-3 { transition-delay: 0.30s; }
@@ -121,7 +148,7 @@ body {
 .stagger-5 { transition-delay: 0.25s; }
 .stagger-6 { transition-delay: 0.35s; }
 
-/* ── Keyframe Animations ── */
+/* ── Keyframes ── */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-15px); }
@@ -180,7 +207,7 @@ section { padding: 8rem 10%; }
 h1, h2, h3 { font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
 ul { list-style: none; }
 a { text-decoration: none; color: inherit; transition: var(--transition-smooth); }
-button { cursor: pointer; border: none; font-family: 'Outfit', sans-serif; font-weight: 600; transition: var(--transition-smooth); }
+button { cursor: pointer; border: none; font-family: var(--font); font-weight: 600; transition: var(--transition-smooth); }
 
 .section-header { text-align: center; margin-bottom: 6rem; }
 .section-title { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 1.5rem; }
@@ -228,10 +255,9 @@ button { cursor: pointer; border: none; font-family: 'Outfit', sans-serif; font-
   display: flex; align-items: center; gap: 0.8rem;
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   font-weight: 600; font-size: 0.9rem;
-  animation: fadeInDrop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 1s both;
 }
-.badge-1 { bottom: 10%; left: -10%; animation-name: fadeInDrop, float-alt; animation-duration: 0.6s, 4s; animation-delay: 1s, 1.6s; animation-fill-mode: both, none; animation-iteration-count: 1, infinite; }
-.badge-2 { top: 10%; right: -5%; animation-name: fadeInDrop, float; animation-duration: 0.6s, 5s; animation-delay: 1.2s, 1.7s; animation-fill-mode: both, none; animation-iteration-count: 1, infinite; }
+.badge-1 { bottom: 10%; left: -10%; animation: fadeInDrop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 1s both, float-alt 4s ease-in-out 1.6s infinite; }
+.badge-2 { top: 10%; right: -5%; animation: fadeInDrop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 1.2s both, float 5s ease-in-out 1.7s infinite; }
 
 .primary-button {
   background: var(--primary); color: white;
@@ -287,10 +313,10 @@ button { cursor: pointer; border: none; font-family: 'Outfit', sans-serif; font-
 
 /* ── FAQ ── */
 .faq-container { max-width: 800px; margin: 4rem auto 0; display: flex; flex-direction: column; gap: 1.5rem; }
-.faq-item { background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; cursor: pointer; transition: var(--transition-smooth); border: 1px solid rgba(75, 0, 130, 0.05); }
+.faq-item { background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid rgba(75, 0, 130, 0.05); transition: var(--transition-smooth); }
 .faq-item:hover { border-color: rgba(75, 0, 130, 0.2); transform: translateY(-2px); }
-.faq-q { padding: 2rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
-.faq-q h3 { font-size: 1.1rem; font-weight: 600; margin: 0; }
+.faq-btn { width: 100%; padding: 2rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; background: none; border: none; cursor: pointer; text-align: left; font-family: var(--font); }
+.faq-btn h3 { font-size: 1.1rem; font-weight: 600; margin: 0; color: var(--text-dark); }
 .faq-icon { color: var(--primary); flex-shrink: 0; transition: transform 0.3s ease; }
 .faq-item.open .faq-icon { transform: rotate(180deg); }
 .faq-a { padding: 0 2rem 2rem; color: var(--gray-medium); line-height: 1.7; animation: fadeIn 0.25s ease; }
