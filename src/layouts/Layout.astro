@@ -47,14 +47,25 @@ const {
       />
     </noscript>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D73W6GB5ZK"></script>
+    <!-- Google Analytics: carregado após primeira interação do usuário -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-D73W6GB5ZK');
+      function loadGTM() {
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-D73W6GB5ZK';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-D73W6GB5ZK');
+        ['scroll','click','touchstart','keydown'].forEach(e => document.removeEventListener(e, loadGTM));
+      }
+      ['scroll','click','touchstart','keydown'].forEach(e =>
+        document.addEventListener(e, loadGTM, {once: true, passive: true})
+      );
     </script>
+    <slot name="head" />
   </head>
   <body>
     <slot />
@@ -83,7 +94,7 @@ const {
   --bg-light: #f8f9fa;
   --text-dark: #1a1a1a;
   --text-light: #ffffff;
-  --gray-medium: #888888;
+  --gray-medium: #666666;
   --shadow-premium: 0 24px 50px rgba(0, 0, 0, 0.08);
   --shadow-glow: 0 0 30px rgba(75, 0, 130, 0.15);
   --shadow-hover: 0 30px 60px rgba(75, 0, 130, 0.12);
@@ -256,8 +267,8 @@ button { cursor: pointer; border: none; font-family: var(--font); font-weight: 6
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   font-weight: 600; font-size: 0.9rem;
 }
-.badge-1 { bottom: 10%; left: -10%; animation: fadeInDrop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 1s both, float-alt 4s ease-in-out 1.6s infinite; }
-.badge-2 { top: 10%; right: -5%; animation: fadeInDrop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 1.2s both, float 5s ease-in-out 1.7s infinite; }
+.badge-1 { bottom: 10%; left: -10%; animation: fadeInDrop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 1s both, float-alt 4s ease-in-out 1.6s infinite; will-change: transform, opacity; }
+.badge-2 { top: 10%; right: -5%; animation: fadeInDrop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 1.2s both, float 5s ease-in-out 1.7s infinite; will-change: transform, opacity; }
 
 .primary-button {
   background: var(--primary); color: white;
@@ -290,7 +301,7 @@ button { cursor: pointer; border: none; font-family: var(--font); font-weight: 6
 .feature-list li { display: flex; align-items: center; gap: 1.2rem; font-weight: 500; font-size: 1.1rem; }
 .crm-features { margin-top: 4rem; display: flex; flex-direction: column; gap: 3rem; }
 .crm-f-item { display: flex; gap: 2rem; align-items: flex-start; }
-.crm-f-item h4 { margin-bottom: 0.5rem; font-size: 1.3rem; }
+.crm-f-item h3 { margin-bottom: 0.5rem; font-size: 1.3rem; }
 .crm-f-item p { color: var(--gray-medium); font-size: 1.05rem; line-height: 1.6; }
 
 /* ── How it Works ── */
@@ -340,7 +351,7 @@ button { cursor: pointer; border: none; font-family: var(--font); font-weight: 6
 .footer-logo img { width: 32px; height: 32px; border-radius: 6px; object-fit: contain; }
 .footer-logo span { font-weight: 900; font-size: 16px; color: #4b0082; letter-spacing: -0.03em; }
 .footer-links { display: flex; gap: 6rem; }
-.footer-links h4 { margin-bottom: 1.5rem; font-size: 1.1rem; }
+.footer-nav-title { margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 700; color: var(--text-dark); }
 .footer-links ul { display: flex; flex-direction: column; gap: 0.8rem; color: var(--gray-medium); }
 .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.05); color: var(--gray-medium); font-size: 0.9rem; }
 

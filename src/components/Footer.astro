@@ -1,17 +1,19 @@
 ---
+import { Image } from 'astro:assets';
+import logoImg from '../assets/logo.png';
 ---
 <footer class="footer">
   <div class="footer-content">
     <div class="footer-brand">
       <div class="footer-logo">
-        <img src="/logo.png" alt="ChatZP" width="32" height="32" />
+        <Image src={logoImg} alt="" aria-hidden="true" width={32} height={32} format="webp" quality={85} loading="lazy" />
         <span>ChatZP</span>
       </div>
       <p>A melhor solução Omnichannel para o seu negócio.</p>
     </div>
     <div class="footer-links">
       <div>
-        <h4>Produto</h4>
+        <p class="footer-nav-title">Produto</p>
         <ul>
           <li>Benefícios</li>
           <li>Automação</li>

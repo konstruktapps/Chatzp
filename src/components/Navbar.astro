@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
+import logoImg from '../assets/logo.png';
 ---
 <nav class="navbar">
   <div class="nav-container">
     <a href="#" class="nav-logo" aria-label="ChatZP">
-      <img src="/logo.png" alt="ChatZP" width="40" height="40" />
+      <Image src={logoImg} alt="" aria-hidden="true" width={40} height={40} format="webp" quality={85} loading="eager" />
       <span>ChatZP</span>
     </a>
     <ul class="nav-links">
