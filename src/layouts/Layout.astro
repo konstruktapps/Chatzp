@@ -14,6 +14,9 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <link rel="canonical" href="https://chatzp.com.br/" />
+    <meta name="theme-color" content="#4b0082" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
@@ -24,7 +27,11 @@ const {
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://chatzp.com.br/" />
     <meta property="og:image" content="https://chatzp.com.br/logo.png" />
+    <meta property="og:locale" content="pt_BR" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://chatzp.com.br/logo.png" />
 
     <!-- Outfit: auto-hospedada, sem dependência de rede externa -->
     <link rel="preload" as="font" href="/fonts/outfit-latin.woff2" type="font/woff2" crossorigin />
@@ -232,15 +239,20 @@ button { cursor: pointer; border: none; font-family: var(--font); font-weight: 6
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
-.nav-container { display: flex; justify-content: space-between; align-items: center; }
+.nav-container { display: flex; justify-content: space-between; align-items: center; position: relative; }
 .nav-logo { display: flex; align-items: center; gap: 12px; }
 .nav-logo img { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; }
 .nav-logo span { font-weight: 900; font-size: 20px; color: #4b0082; letter-spacing: -0.03em; }
 .nav-links { display: flex; gap: 1.5rem; font-size: 0.92rem; }
-.nav-links a { font-weight: 500; color: var(--text-dark); white-space: nowrap; }
+.nav-links a { font-weight: 500; color: var(--text-dark); white-space: nowrap; padding: 0.6rem 0; display: inline-block; }
 .nav-links a:hover { color: var(--primary); }
 .nav-cta { background: var(--primary); color: white; padding: 0.7rem 1.5rem; border-radius: 10px; transition: var(--transition-smooth); }
 .nav-cta:hover { background: var(--primary-light); transform: translateY(-2px); }
+.nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; background: none; padding: 0; flex-shrink: 0; }
+.nav-toggle span { display: block; width: 24px; height: 2px; margin: 0 auto; background: var(--text-dark); border-radius: 2px; transition: var(--transition-smooth); }
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ── Hero ── */
 .hero {
@@ -248,8 +260,9 @@ button { cursor: pointer; border: none; font-family: var(--font); font-weight: 6
   align-items: center; gap: 5rem;
   padding: 12rem 10% 6rem;
 }
+.hero > * { min-width: 0; }
 .hero-content { animation: slideInLeft 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-.hero-title { font-size: 4.5rem; margin-bottom: 2rem; letter-spacing: -0.03em; line-height: 1.05; }
+.hero-title { font-size: clamp(2.7rem, 6vw, 4.5rem); margin-bottom: 2rem; letter-spacing: -0.03em; line-height: 1.05; }
 .hero-subtitle { font-size: 1.35rem; color: var(--gray-medium); margin-bottom: 3rem; max-width: 600px; line-height: 1.7; }
 .hero-actions { display: flex; gap: 2rem; margin-bottom: 4rem; }
 .hero-stats { display: flex; gap: 4rem; }
@@ -290,6 +303,7 @@ button { cursor: pointer; border: none; font-family: var(--font); font-weight: 6
 
 /* ── Container Split ── */
 .container-split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 6rem; }
+.container-split > * { min-width: 0; }
 .container-split.reverse { direction: rtl; }
 .container-split.reverse > * { direction: ltr; }
 
@@ -353,6 +367,7 @@ button { cursor: pointer; border: none; font-family: var(--font); font-weight: 6
 .footer-links { display: flex; gap: 6rem; }
 .footer-nav-title { margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 700; color: var(--text-dark); }
 .footer-links ul { display: flex; flex-direction: column; gap: 0.8rem; color: var(--gray-medium); }
+.footer-links ul a:hover { color: var(--primary); }
 .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.05); color: var(--gray-medium); font-size: 0.9rem; }
 .footer-credit { margin-top: 10px; font-size: 0.85rem; color: var(--gray-medium); }
 
@@ -374,7 +389,21 @@ button { cursor: pointer; border: none; font-family: var(--font); font-weight: 6
   .hero-stats { justify-content: center; }
   .container-split, .container-split.reverse { grid-template-columns: 1fr; direction: ltr; gap: 3rem; }
   .channels-grid, .steps-container, .adv-features-grid { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
+  .navbar { padding: 1.2rem 5%; }
+  .nav-toggle { display: flex; }
+  .nav-links {
+    position: absolute; top: calc(100% + 0.75rem); left: 0; right: 0;
+    flex-direction: column; gap: 0;
+    background: var(--glass); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px;
+    box-shadow: var(--shadow-premium);
+    max-height: 0; overflow: hidden; opacity: 0; padding: 0 1.5rem;
+    transition: var(--transition-smooth);
+  }
+  .nav-links.open { max-height: 24rem; opacity: 1; padding: 0.5rem 1.5rem; }
+  .nav-links li { width: 100%; }
+  .nav-links a { display: block; padding: 0.9rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .nav-links li:last-child a { border-bottom: none; }
   .footer-content { flex-direction: column; gap: 3rem; }
   .badge-1 { left: 0; }
   .badge-2 { right: 0; }

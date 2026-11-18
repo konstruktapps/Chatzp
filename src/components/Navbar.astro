@@ -1,23 +1,88 @@
 ---
+// LAB — inspirado em Aceternity "Floating Navbar": some ao rolar pra baixo,
+// volta ao rolar pra cima, e vira uma pílula flutuante depois do hero.
 import { Image } from 'astro:assets';
 import logoImg from '../assets/logo.png';
 ---
-<nav class="navbar">
+<nav class="navbar navbar-v2" id="navbar-v2">
   <div class="nav-container">
     <a href="#" class="nav-logo" aria-label="ChatZP">
       <Image src={logoImg} alt="" aria-hidden="true" width={40} height={40} format="webp" quality={85} loading="eager" />
       <span>ChatZP</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="#beneficios">Canais</a></li>
-      <li><a href="#automacao">Automação</a></li>
-      <li><a href="#crm">CRM</a></li>
-      <li><a href="#como-funciona">Como Funciona</a></li>
+    <ul class="nav-links" id="nav-links-v2">
+      <li><a href="#beneficios-v2">Canais</a></li>
+      <li><a href="#automacao-v2">Automação</a></li>
+      <li><a href="#crm-v2">CRM</a></li>
+      <li><a href="#como-funciona-v2">Como Funciona</a></li>
       <li><a href="#recursos">Recursos</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
     <a href="https://wa.me/5531987771763" target="_blank" rel="noopener noreferrer" class="nav-cta">
       Começar Agora
     </a>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links-v2">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<style>
+  /* Largura/posição fixas desde o início — só transform/background/radius/shadow
+     animam (nenhuma propriedade de layout), pra não forçar reflow a cada scroll. */
+  .navbar-v2 {
+    top: 1rem; left: 50%; width: min(94%, 1200px);
+    border-radius: 20px;
+    transform: translateX(-50%);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.35s ease, border-radius 0.35s ease, box-shadow 0.35s ease;
+  }
+  .navbar-v2.hide { transform: translateX(-50%) translateY(-130%); }
+  .navbar-v2.floating {
+    border-radius: 999px;
+    box-shadow: var(--shadow-premium);
+    border-bottom: none;
+  }
+
+  /* Abaixo de 1024px a pílula flutuante não compensa — largura é curta
+     demais pra logo+CTA+hamburguer. Volta a ser a barra cheia de sempre. */
+  @media (max-width: 1024px) {
+    .navbar-v2, .navbar-v2.floating {
+      width: 100%; left: 0; transform: none;
+      border-radius: 0; box-shadow: none;
+    }
+    .navbar-v2.hide, .navbar-v2.floating.hide { transform: translateY(-130%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .navbar-v2 { transition: background 0.2s ease; }
+    .navbar-v2.hide { transform: none; }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('navbar-v2');
+  if (nav) {
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      nav.classList.toggle('floating', y > 120);
+      if (y > lastY && y > 200) nav.classList.add('hide');
+      else nav.classList.remove('hide');
+      lastY = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const toggle = nav.querySelector<HTMLButtonElement>('.nav-toggle');
+    const links = document.getElementById('nav-links-v2');
+    if (toggle && links) {
+      const close = () => { toggle.setAttribute('aria-expanded', 'false'); toggle.classList.remove('open'); links.classList.remove('open'); };
+      toggle.addEventListener('click', () => {
+        const open = toggle.classList.toggle('open');
+        links.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+      links.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+      window.addEventListener('resize', () => { if (window.innerWidth > 1024) close(); });
+    }
+  }
+</script>

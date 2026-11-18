@@ -13,7 +13,7 @@ import Footer from '../components/Footer.astro';
 import { getImage } from 'astro:assets';
 import dashboardImg from '../assets/dashboard.png';
 
-const lcpImage = await getImage({ src: dashboardImg, width: 720, format: 'webp', quality: 85 });
+const lcpImage = await getImage({ src: dashboardImg, width: 820, format: 'webp', quality: 85 });
 ---
 <Layout>
   <link slot="head" rel="preload" as="image" href={lcpImage.src} fetchpriority="high" />

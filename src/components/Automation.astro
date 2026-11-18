@@ -1,18 +1,15 @@
 ---
+// LAB — inspirado em Aceternity "Container Scroll Animation"
+// O mockup entra inclinado em 3D e "deita" conforme o usuário rola até ele.
 import { Image } from 'astro:assets';
 import flowbuilderImg from '../assets/flowbuilder.png';
 ---
-<section id="automacao" class="automation light-bg">
+<section id="automacao-v2" class="automation light-bg">
   <div class="container-split">
     <div class="automation-visual fade-in-left">
-      <Image
-        src={flowbuilderImg}
-        alt="ChatZP FlowBuilder"
-        width={600}
-        format="webp"
-        quality={85}
-        loading="lazy"
-      />
+      <div class="scroll-tilt">
+        <Image src={flowbuilderImg} alt="ChatZP FlowBuilder" width={600} format="webp" quality={85} loading="lazy" />
+      </div>
     </div>
     <div class="automation-text">
       <div class="fade-in-right">
@@ -23,20 +20,42 @@ import flowbuilderImg from '../assets/flowbuilder.png';
         </h2>
         <p>Nossa interface visual intuitiva permite desenhar fluxos de trabalho avançados em minutos. Qualifique leads 24/7 sem digitar uma única linha de código.</p>
         <ul class="feature-list">
-          <li>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Arraste e solte blocos logicamente
-          </li>
-          <li>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Condições inteligentes por horário ou palavra-chave
-          </li>
-          <li>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Transbordo humano automático para a equipe certa
-          </li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Arraste e solte blocos logicamente</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Condições inteligentes por horário ou palavra-chave</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Transbordo humano automático para a equipe certa</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .scroll-tilt {
+    perspective: 1400px;
+  }
+  .scroll-tilt img {
+    transform: rotateX(var(--tilt, 18deg)) scale(var(--tscale, 0.94));
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
+    box-shadow: var(--shadow-premium);
+    border-radius: 20px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-tilt img { transform: none !important; transition: none; }
+  }
+</style>
+
+<script>
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const el = document.querySelector<HTMLElement>('#automacao-v2 .scroll-tilt');
+  if (el && !reduced) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        const ratio = Math.min(1, e.intersectionRatio / 0.8);
+        el.style.setProperty('--tilt', `${18 * (1 - ratio)}deg`);
+        el.style.setProperty('--tscale', `${0.94 + 0.06 * ratio}`);
+      });
+    }, { threshold: Array.from({ length: 21 }, (_, i) => i / 20) });
+    io.observe(el);
+  }
+</script>
